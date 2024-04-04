@@ -1,42 +1,119 @@
 <!DOCTYPE html>
 <html lang="tr">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Namaz Vakitleri</title>
-    <meta type="robots" content="index, follow" />
-    <meta type="googlebot" content="index, follow" />
-    <link
-      href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
-      rel="stylesheet"
-      integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
-      crossorigin="anonymous"
-    />
-    <link rel="stylesheet" href="style.css" />
-  </head>
-  <body>
-    <div class="container my-5">
-      <h1>Türkiye Namaz Vakitleri Uygulaması</h1>
-      <span id="secilen-sehir"></span>
-      <span id="secilen-ilce"></span>
-      <div class="row mt-3">
-        <div class="col-md-6">
-          <label for="il-select" class="form-label">İl Seçin</label>
-          <select class="form-select" id="il-select">
-            <option selected>Lütfen bir il seçin...</option>
-            <!-- Burada il seçeneklerini listelemek için JS kullanacağız -->
-          </select>
-        </div>
-        <div class="col-md-6">
-          <label for="ilce-select" class="form-label">İlçe Seçin</label>
-          <select class="form-select" id="ilce-select" disabled>
-            <option selected>Lütfen önce bir il seçin...</option>
-          </select>
-        </div>
 
-        <div id="namaz-saatleri"></div>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Namaz Vakitleri</title>
+  <meta type="robots" content="index, follow" />
+  <meta type="googlebot" content="index, follow" />
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
+  <script src="https://cdn.rawgit.com/rainabba/jquery-table2excel/1.1.0/dist/jquery.table2excel.min.js"></script>
+
+
+
+
+
+
+</head>
+
+<body>
+  <div class="container my-5">
+    <h1>Türkiye Namaz Vakitleri Uygulaması</h1>
+    <span id="secilen-sehir"></span>
+    <span id="secilen-ilce"></span>
+    <div class="row mt-3">
+      <div class="col-md-6">
+        <label for="il-select" class="form-label">İl Seçin</label>
+        <select class="form-select" id="il-select">
+          <option selected>Lütfen bir il seçin...</option>
+          <!-- Burada il seçeneklerini listelemek için JS kullanacağız -->
+        </select>
       </div>
+      <div class="col-md-6">
+        <label for="ilce-select" class="form-label">İlçe Seçin</label>
+        <select class="form-select" id="ilce-select" disabled>
+          <option selected>Lütfen önce bir il seçin...</option>
+        </select>
+      </div>
+
+      <div id="namaz-saatleri"></div>
+      
+
     </div>
-    <script src="app.js"></script>
-  </body>
+
+    <input type="button" onclick="tableToExcel('my-table', 'Aylık Namaz Vakitleri')" value="Excel'e Aktar">
+
+  </div>
+
+  </div>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx-populate/3.11.0/xlsx-populate.min.js"></script>
+
+
+  <script src="app.js"></script>
+
+  
+  <script type="text/javascript">
+    var tableToExcel = (function () {
+      var uri = 'data:application/vnd.ms-excel;base64,'
+        , template = '<html xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:x="urn:schemas-microsoft-com:office:excel" xmlns="http://www.w3.org/TR/REC-html40"><head><!--[if gte mso 9]><xml><x:ExcelWorkbook><x:ExcelWorksheets><x:ExcelWorksheet><x:Name>{worksheet}</x:Name><x:WorksheetOptions><x:DisplayGridlines/></x:WorksheetOptions></x:ExcelWorksheet></x:ExcelWorksheets></x:ExcelWorkbook></xml><![endif]--><meta http-equiv="content-type" content="text/plain; charset=UTF-8"/></head><body><table>{table}</table></body></html>'
+        , base64 = function (s) { return window.btoa(unescape(encodeURIComponent(s))) }
+        , format = function (s, c) { return s.replace(/{(\w+)}/g, function (m, p) { return c[p]; }) }
+      return function (table, name) {
+        if (!table.nodeType) table = document.getElementById(table)
+        var ctx = { worksheet: name || 'Worksheet', table: table.innerHTML }
+        window.location.href = uri + base64(format(template, ctx))
+      }
+    })()
+  </script>
+
+  
+
+
+<!--
+
+
+bu da xlsx açıyor ama tablo güzel değil
+
+  <button onclick="ExportToExcel('xlsx')">Export table to excel</button>
+  
+  <script>
+
+    function ExportToExcel(type, fn, dl) {
+      var elt = document.getElementById('my-table');
+      var wb = XLSX.utils.table_to_book(elt, { sheet: "sheet1" });
+      return dl ?
+        XLSX.write(wb, { bookType: type, bookSST: true, type: 'base64' }) :
+        XLSX.writeFile(wb, fn || ('MySheetName.' + (type || 'xlsx')));
+    }
+
+  </script>
+-->
+
+<!--
+
+//xls açıyor olmadı bu 
+
+
+  <script>
+     let button = document.querySelector("#button-excel");
+
+      button.addEventListener("click", e => {
+        let table = document.querySelector("#my-table");
+        TableToExcel.convert(table);
+      });
+  </script>
+
+
+  <button id="button-excel">Create Excel</button>
+
+  <script src='https://cdn.jsdelivr.net/gh/linways/table-to-excel@v1.0.4/dist/tableToExcel.js'></script>
+-->
+
+
+</body>
+
 </html>

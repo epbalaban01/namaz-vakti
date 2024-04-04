@@ -2,6 +2,8 @@
 // 16.06.2023
 // formula1turkey.epizy.com
 
+
+
 document.addEventListener("DOMContentLoaded", function () {
   const ilSelect = document.getElementById("il-select");
   const ilceSelect = document.getElementById("ilce-select");
@@ -64,7 +66,7 @@ document.addEventListener("DOMContentLoaded", function () {
   // Namaz saatlerini getiriyoruz
   ilceSelect.addEventListener("change", () => {
     const namazUrl = `https://ezanvakti.herokuapp.com/vakitler?ilce=${ilceSelect.value}`;
-    
+
     // Seçilen ilçeyi gösteriyoruz
     const selectedSehir = ilceSelect.options[ilceSelect.selectedIndex].text;
     const secilenSehir = document.getElementById("secilen-ilce");
@@ -75,9 +77,23 @@ document.addEventListener("DOMContentLoaded", function () {
       .then((data) => {
         // Namaz saatlerini gösteriyoruz
         const table = document.createElement("table");
+        table.id = "my-table";
         table.classList.add("table", "table-striped", "table-hover");
         const thead = document.createElement("thead");
         const tbody = document.createElement("tbody");
+
+        // Başlık satırını oluştur
+        const trTitle = document.createElement("tr");
+        const thTitle = document.createElement("th");
+        thTitle.colSpan = "7"; // 7 sütunluk başlık için
+        thTitle.textContent = `${selectedSehir} - Aylık Namaz Vakitleri`;
+        // Yazıyı ortalamak için CSS stilleri ekle
+        thTitle.style.textAlign = "center"; // Yazıyı yatayda ortala
+        thTitle.style.verticalAlign = "middle"; // Yazıyı dikeyde ortala
+        trTitle.appendChild(thTitle);
+        thead.appendChild(trTitle);
+
+
         const trHead = document.createElement("tr");
         const thTarih = document.createElement("th");
         const thImsak = document.createElement("th");
@@ -146,3 +162,4 @@ document.addEventListener("DOMContentLoaded", function () {
       .catch((error) => console.error(error));
   });
 });
+
