@@ -17,5 +17,5 @@ Daha kolay bir şekilde bir aylık namaz vakitleri gösterilmesi tasarlanmışt�
 
 <hr/>
 
-> Lisans bilgisi tüm kod, GPL Sürüm 3 lisansı altındadır. Lisansın kullanım koşulları için LİSANS dosyasını okuyun..
+> Lisans bilgisi tüm kod, MIT lisansı altındadır. Lisansın kullanım koşulları için LİSANS dosyasını okuyun..
 
